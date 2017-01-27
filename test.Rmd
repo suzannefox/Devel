@@ -1,0 +1,136 @@
+---
+title: "Dataset report"
+author: "Suzanne Fox"
+date: "27 November 2016"
+output: word_document
+df_print: kable
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Dataset analysis 
+
+```{r Burrow, echo=FALSE,  message=F, warning=F}
+library(ggplot2)
+library(cowplot)
+
+#myOutPath = "E:/MSc Course/Dissertation/R/"
+myOutPath = "C:/Users/suzan/Documents/Dissertation-temp/R/"
+setwd(myOutPath)
+source("function_Burrow.R")
+
+myDataset <- 1
+
+if (myDataset==1) {
+  burrow.inputdata <- read.csv(paste(myOutPath,"TestData.csv",sep=""))
+  burrow.title <- "mtcars dataset"
+  
+} else if (myDataset==2) {
+  burrow.inputdata <- mtcars
+  burrow.title <- "mtcars dataset"
+  
+} else if (myDataset==3) {
+  burrow.inputdata <- as.data.frame(diamonds)
+  burrow.title <- "diamonds dataset"
+}
+burrow.data <- BurrowData(burrow.inputdata)
+burrow.bestguess <- BurrowBestGuess(burrow.inputdata,burrow.title)
+
+burrow.report <- BurrowReport(burrow.inputdata)
+burrow.plothist <- subset(burrow.report,BEST_GUESS=="NUMBER")
+  
+#burrow.data <- BurrowData(mtcars)
+#burrow.bestguess <- BurrowBestGuess(mtcars)
+#burrow.report <- BurrowReport(mtcars)
+  
+```
+
+## Dataset Structure
+
+```{r structure, echo=FALSE}
+numcols <- subset(burrow.data, Variable1=="NUMCOLS", c("myData1"))
+numrows <- subset(burrow.data, Variable1=="NUMROWS", c("myData1"))
+outtext <- sprintf("This dataset has %s columns (variables) and %s rows (cases)",numcols, numrows)
+
+print(outtext)
+print(burrow.report)
+
+# Visualise Uniques
+p1 <- ggplot(data=burrow.report, 
+       aes(x=VariableName, y=Unique)) +
+       geom_bar(colour="black", fill="#4C1E9C", 
+                width=.8, stat="identity") + 
+                guides(fill=FALSE) +
+                xlab("Variables") + ylab("% of Total") +
+                ggtitle("Unique Values") +
+                ylim(0, 100) +
+              theme(panel.grid.major = element_blank(), 
+              panel.grid.minor = element_blank(),
+              panel.background = element_blank(), 
+              axis.line=element_blank(),
+              axis.text.x=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks=element_blank(),
+              legend.position="none")
+
+
+  # Visualise Missing
+p2 <-  ggplot(data=burrow.report, 
+         aes(x=VariableName, y=Missing)) +
+         geom_bar(colour="black", fill="#4C1E9C", 
+                  width=.8, stat="identity") + 
+                  guides(fill=FALSE) +
+                  xlab("Variables") + ylab("% of Total") +
+                  ggtitle("Missing Values") +
+                  ylim(0, 100) +
+          theme(panel.grid.major = element_blank(), 
+                panel.grid.minor = element_blank(),
+                panel.background = element_blank(), 
+                axis.line=element_blank(),
+                axis.text.x=element_blank(),
+                axis.text.y=element_blank(),
+                axis.ticks=element_blank(),
+                legend.position="none")
+
+# plot uniques and missings
+plot_grid(p1, p2, align='h')
+
+if (sum(burrow.report$Missing)==0) {
+  print("There were no missing values for any variable")
+} else {
+  print("Dealing with missing data")
+}
+
+#plotvar <- "mpg"
+#myPlot_Int(mtcars,plotvar)
+
+num.histograms <- nrow(burrow.plothist)
+print(paste("There are",num.histograms,"numeric fields."))
+
+for (i in seq_len(num.histograms)) {
+  plotvar <- burrow.plothist[i,c("VariableName")]
+  print(paste("Plotting",plotvar))
+
+  possibleError <- tryCatch(
+    myPlot <- myPlot_Int(burrow.inputdata,plotvar),
+    error=function(e) e
+  )
+
+  if(inherits(possibleError, "error")) {
+    print(paste("error plotting",plotvar))
+    next
+  }
+
+  print(myPlot)
+}
+
+```
+## Variable detail
+
+Best guess for the datatypes of each variable is
+```{r datatypes, echo=FALSE}
+print(burrow.bestguess[c(2,3,4)])
+```
+

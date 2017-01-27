@@ -1,0 +1,25 @@
+InfoLevel, InfoType, InfoDetail, VariableLevel, Variable1, Data1, Variable2, Data2, Notes
+FILE,SOURCE,DATA.FRAME,,,x,,,
+FILE,DETAIL,COUNT_COLUMNS,,NUMCOLS,3,,,ncol(myData)
+FILE,DETAIL,COUNT_ROWS,,NUMROWS,10,,,nrow(myData)
+FILE,DETAIL,COLUMN_NAME,,COLNAME,a,,,names(myData)
+FILE,DETAIL,ORDINAL_POSITION,,a,1,,,
+FILE,DETAIL,DATA_CLASS_R,,a,numeric,,,sapply(myData,class)
+FILE,DETAIL,DATA_TYPE_R,,a,double,,,sapply(myData,typeof)
+FILE,DETAIL,COLUMN_NAME,,COLNAME,b,,,names(myData)
+FILE,DETAIL,ORDINAL_POSITION,,b,2,,,
+FILE,DETAIL,DATA_CLASS_R,,b,numeric,,,sapply(myData,class)
+FILE,DETAIL,DATA_TYPE_R,,b,double,,,sapply(myData,typeof)
+FILE,DETAIL,COLUMN_NAME,,COLNAME,c,,,names(myData)
+FILE,DETAIL,ORDINAL_POSITION,,c,3,,,
+FILE,DETAIL,DATA_CLASS_R,,c,integer,,,sapply(myData,class)
+FILE,DETAIL,DATA_TYPE_R,,c,integer,,,sapply(myData,typeof)
+FIELD,DETAIL,ROWS,UNI,a,10,,,
+FIELD,DETAIL,UNIQUES,UNI,a,2,,,
+FIELD,DETAIL,NA,UNI,a,1,,,
+FIELD,DETAIL,ROWS,UNI,b,10,,,
+FIELD,DETAIL,UNIQUES,UNI,b,2,,,
+FIELD,DETAIL,NA,UNI,b,3,,,
+FIELD,DETAIL,ROWS,UNI,c,10,,,
+FIELD,DETAIL,UNIQUES,UNI,c,4,,,
+FIELD,DETAIL,NA,UNI,c,1,,,

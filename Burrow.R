@@ -4,12 +4,6 @@
 # ==============================================
 Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
 
-  x <- deparse(substitute(sourcedata))
-  message(paste(x))
-  
-  if (1==1) {
-    stop()
-  }
   # =================================================================
   # INPUT VALIDITY CHECKING
   # =================================================================
@@ -51,9 +45,34 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   # Start time
   tstart <- proc.time()
   
+  # write some header details
+  myArgs.InfoLevel <- "HEADER"
+  myArgs.InfoType <- "RUN DATE"
+  myArgs.InfoDetail <- format(Sys.time(), "%a %b %d %Y, %X")
+  myArgs.Variable1 <- ""
+  myArgs.Data1 <- ""
+  myArgs.Variable2 <- ""
+  myArgs.Data2 <- ""
+  myArgs.Notes <- ""
+  
+  df.burrow = myContentLine(df.burrow,
+                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                            myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
+                            myArgs.Notes)
+
+  myArgs.InfoLevel <- "DATASET"
+  myArgs.InfoType <- "SOURCEDATA"
+  myArgs.InfoDetail <- deparse(substitute(sourcedata))
+
+  df.burrow = myContentLine(df.burrow,
+                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                            myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
+                            myArgs.Notes)
+  
   # =================================================================
   # COLLECT DATASET DETAILS
   # =================================================================
+  
   myData <- sourcedata
   
   if (diagnostics==TRUE) {
@@ -62,6 +81,14 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   df.burrow <- write_Datasetinfo(myData, sourcedescription, df.burrow, diagnostics) 
   
   # =================================================================
+  # CALCULATE CORRELATIONS FRO NUMERIC FIELDS
+  # =================================================================
+  if (diagnostics==TRUE) {
+    print(paste("BURROW","... Calculating correlations"))
+  }
+  df.correlations <- calculate_Correlations(myData, diagnostics)
+
+  # =================================================================
   # COLLECT DETAILS FOR EACH FIELD AND GUESS THE DATATYPE
   # =================================================================
   for(i in names(myData)) {
@@ -69,8 +96,19 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
       print(paste("BURROW","... Analysing field :",i))
     }
 
+    # Field features
     df.burrow <- write_Fieldinfo(myData, i, df.burrow)
+    # Best guess at datatype
     df.burrow <- write_BestGuess(myData, i, df.burrow)
+    
+    # Previous calculations
+    i.gotcorrelation <- nrow(subset(df.correlations, Var1==i))
+    if (i.gotcorrelation > 0) {
+      if (diagnostics==TRUE) {
+        print(paste("BURROW","... Adding Correlation :",i))
+      }
+      df.burrow <- write_Calculations(df.correlations,i,df.burrow,"CORRELATION")
+    }
 
     if (diagnostics==TRUE) {
       bg <- subset(df.burrow, InfoType=="BEST GUESS" & Variable1==i)
@@ -111,21 +149,14 @@ write_Datasetinfo <- function(myData, myDescription, df.burrow, diagnostics=FALS
   
   # write the data source details
   myArgs.InfoLevel <- "DATASET"
-  myArgs.InfoType <- "RUN DATE"
-  myArgs.InfoDetail <- format(Sys.time(), "%a %b %d %Y, %X")
+  myArgs.InfoType <- "SOURCE"
+  myArgs.InfoDetail <- myDescription
   myArgs.Variable1 <- ""
   myArgs.Data1 <- ""
   myArgs.Variable2 <- ""
   myArgs.Data2 <- ""
   myArgs.Notes <- ""
-  df.burrow = myContentLine(df.burrow,
-                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
-                            myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
-                            myArgs.Notes)
   
-  # write the data source details
-  myArgs.InfoType <- "SOURCE"
-  myArgs.InfoDetail <- myDescription
   df.burrow = myContentLine(df.burrow,
                             myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
                             myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
@@ -878,7 +909,67 @@ write_BestGuess <- function(myData, Field, df.burrow, diagnostics=FALSE) {
   return(df.burrow)  
   
 }
+
+# -------------------------------------------------------------
+# determine correlations for numeric fields
+# -------------------------------------------------------------
+calculate_Correlations <- function(myData, diagnostics=FALSE) {
+
+  # identify all the variables suitable for numeric stats
+  myData.mean <- as.data.frame(suppressWarnings(sapply(myData, mean, na.rm=TRUE)))
+  colnames(myData.mean) <- "Value"
   
+  # get the numerical variables
+  myData.numericols <- row.names(subset(myData.mean, Value!="NA"))
+  
+  # make empty dataframe
+  myData.correlations <- data.frame(Var1=character(),
+                                    Var2=character(),
+                                    cor=double())
+  # calculate correlations
+  myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)]))
+  
+  for (i in names(myData.cor)) {
+    temp.Var1 <- myData.numericols
+    temp.Var2 <- rep_len(i, length(temp.Var1))
+    temp.Var3 <- myData.cor[,c(i)]
+    temp.df = data.frame("Var1" = temp.Var1, "Var2" = temp.Var2, "Value" = temp.Var3)
+    myData.correlations <- rbind2(myData.correlations, temp.df)
+  }
+  
+  return(myData.correlations)
+}  
+
+# -------------------------------------------------------------
+# Add pre calulated values to the burrow data
+# -------------------------------------------------------------
+write_Calculations <- function(df.correlations, Field, df.burrow, calcType) {
+
+  if (calcType=="CORRELATION") {
+
+    # Corelations for this field
+    my.corr <- subset(df.correlations, Var1==Field)
+    
+    for(i in 1:nrow(my.corr)){
+      # write the Field details
+      myArgs.InfoLevel <- "FIELD"
+      myArgs.InfoType <- "ANALYSIS"
+      myArgs.InfoDetail <- "CORRELATION"
+      myArgs.Variable1 <- Field
+      myArgs.Data1 <- my.corr[i,"Value"]
+      myArgs.Variable2 <- my.corr[i,"Var2"]
+      myArgs.Data2 <- ""
+      myArgs.Notes <- ""
+      
+      df.burrow = myContentLine(df.burrow, myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                                myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
+                                myArgs.Notes)
+    }
+  }
+  
+  return (df.burrow)
+}
+
 # -------------------------------------------------------------
 # write a record to the long format burrow dataframe
 # -------------------------------------------------------------

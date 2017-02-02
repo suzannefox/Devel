@@ -4,6 +4,12 @@
 # ==============================================
 Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
 
+  x <- deparse(substitute(sourcedata))
+  message(paste(x))
+  
+  if (1==1) {
+    stop()
+  }
   # =================================================================
   # INPUT VALIDITY CHECKING
   # =================================================================
@@ -23,11 +29,10 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   }
   
   # =================================================================
-  # LOG THE CREATION TIME
+  # REPORT THE RUN START
   # =================================================================
-  myCreation <- format(Sys.time(), "%a %b %d %Y, %X")
   if (diagnostics==TRUE) {
-    print(paste("BURROW","... Run started :",myCreation))
+    print(paste("BURROW","... Run started :",format(Sys.time(), "%a %b %d %Y, %X")))
   }
   
   # =============================================================
@@ -66,6 +71,11 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
 
     df.burrow <- write_Fieldinfo(myData, i, df.burrow)
     df.burrow <- write_BestGuess(myData, i, df.burrow)
+
+    if (diagnostics==TRUE) {
+      bg <- subset(df.burrow, InfoType=="BEST GUESS" & Variable1==i)
+      print(paste("BURROW","... Best Guess is :",bg[,c("myData1")]))
+    }
   }
   
   # =================================================================
@@ -81,7 +91,6 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   value <- list(sourcedata = sourcedata, 
                 sourcedescription = sourcedescription, 
                 longBurrow = df.burrow,
-                runStatsCreation = myCreation,
                 runStatsProcTime = tused[1])
   
   attr(value, "class") <- "Burrow"
@@ -102,13 +111,21 @@ write_Datasetinfo <- function(myData, myDescription, df.burrow, diagnostics=FALS
   
   # write the data source details
   myArgs.InfoLevel <- "DATASET"
-  myArgs.InfoType <- "SOURCE"
-  myArgs.InfoDetail <- myDescription
+  myArgs.InfoType <- "RUN DATE"
+  myArgs.InfoDetail <- format(Sys.time(), "%a %b %d %Y, %X")
   myArgs.Variable1 <- ""
   myArgs.Data1 <- ""
   myArgs.Variable2 <- ""
   myArgs.Data2 <- ""
   myArgs.Notes <- ""
+  df.burrow = myContentLine(df.burrow,
+                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                            myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
+                            myArgs.Notes)
+  
+  # write the data source details
+  myArgs.InfoType <- "SOURCE"
+  myArgs.InfoDetail <- myDescription
   df.burrow = myContentLine(df.burrow,
                             myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
                             myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,

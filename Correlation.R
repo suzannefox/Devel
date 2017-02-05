@@ -1,6 +1,8 @@
 
+testdata <- read.csv("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/TestData.csv")
+
 # identify all the variables suitable for numeric stats
-iris.mean <- as.data.frame(sapply(iris, mean, na.rm=TRUE))
+iris.mean <- as.data.frame(suppressWarnings(sapply(testdata, mean, na.rm=TRUE)))
 colnames(iris.mean) <- "Value"
 
 # get the numerical variables
@@ -11,7 +13,7 @@ iris.correlations <- data.frame(Var1=character(),
                                 Var2=character(),
                                 cor=double())
 # calculate correlations
-iris.cor <- as.data.frame(cor(iris[,c(iris.numericols)]))
+iris.cor <- as.data.frame(cor(testdata[,c(iris.numericols)]))
 
 # make a long format dataframe
 for (i in names(iris.cor)) {
@@ -22,10 +24,10 @@ for (i in names(iris.cor)) {
   iris.correlations <- rbind2(iris.correlations, temp.df)
 }
 
-for(i in names(iris)) {
-  print(i)
-  print(nrow(subset(iris.correlations, Var1==i)))
-}
+# for(i in names(iris)) {
+#   print(i)
+#   print(nrow(subset(iris.correlations, Var1==i)))
+# }
   
 
 # x <- stack(iris.cor)

@@ -128,7 +128,7 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   
   value <- list(sourcedata = sourcedata, 
                 sourcedescription = sourcedescription, 
-                longBurrow = df.burrow,
+                data = df.burrow,
                 runStatsProcTime = tused[1])
   
   attr(value, "class") <- "Burrow"
@@ -927,7 +927,7 @@ calculate_Correlations <- function(myData, diagnostics=FALSE) {
                                     Var2=character(),
                                     cor=double())
   # calculate correlations
-  myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)]))
+  myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)], use="complete.obs"))
   
   for (i in names(myData.cor)) {
     temp.Var1 <- myData.numericols
@@ -959,7 +959,7 @@ write_Calculations <- function(df.correlations, Field, df.burrow, calcType) {
       myArgs.Data1 <- my.corr[i,"Value"]
       myArgs.Variable2 <- my.corr[i,"Var2"]
       myArgs.Data2 <- ""
-      myArgs.Notes <- ""
+      myArgs.Notes <- "NAs excluded, Pearsons calculation"
       
       df.burrow = myContentLine(df.burrow, myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
                                 myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
@@ -989,8 +989,8 @@ myContentLine <- function(df.burrow,
   # myData2 : The data for the comparator
   # myNotes : R code, notes etc
   
-  VarLevel <- "UNI"
-  if (Variable2 != "") VarLevel <- "BI"
+  VarLevel <- "UNIVARIATE"
+  if (Variable2 != "") VarLevel <- "BIVARIATE"
   if (InfoLevel == "FILE") VarLevel <- ""
   
   newrow <- data.frame("InfoLevel"=InfoLevel, "InfoType"=InfoType, "InfoDetail"=InfoDetail, 

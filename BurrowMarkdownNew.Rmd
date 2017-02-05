@@ -1,0 +1,133 @@
+---
+title: "Dataset report of a burrow data file"
+author: "Suzanne Fox"
+date: "February 2017"
+output: word_document
+df_print: kable
+---
+
+```{r setup, echo=FALSE,  message=FALSE, warning=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+#library(cowplot)
+
+workdir <- "C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/"
+
+setwd(workdir)
+
+Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
+Data.burrow <- read.csv("TestBurrow.csv", stringsAsFactors = FALSE)
+
+```
+
+## Dataset details
+
+
+```{r structure, echo=FALSE, comment="", collapse=TRUE}
+# Dataset name
+Data.name <- subset(Data.burrow, InfoLevel=="DATASET" &  InfoType=="SOURCEDATA",
+c("InfoDetail"))
+cat(paste("Source data name -", Data.name))
+
+# Description
+Data.description <- subset(Data.burrow, InfoLevel=="DATASET" & InfoType=="SOURCE",
+c("InfoDetail"))
+cat(paste("Source data description -", Data.description))
+
+# Run time
+Data.rundate <- subset(Data.burrow, InfoLevel=="HEADER" & InfoType=="RUN DATE",
+c("InfoDetail"))
+cat(paste("Burrow data created -", Data.rundate))
+
+# Dataset structure ================================================
+
+numcols <- subset(Data.burrow, Variable1=="NUMCOLS", c("myData1"))
+numrows <- subset(Data.burrow, Variable1=="NUMROWS", c("myData1"))
+outtext <- sprintf("Dataset dimensions - %s columns (variables) and %s rows (cases)",numcols, numrows)
+
+cat(outtext)
+```
+
+## Best Guess at datatype for each variable
+
+
+```{r datatypes, echo=FALSE, comment="", collapse=TRUE}
+Data.bestguess <- subset(Data.burrow, InfoType=="BEST GUESS", select=c("Variable1","myData1"))
+names(Data.bestguess) <- c("Variable","Datatype")
+
+print(Data.bestguess, row.names=FALSE)
+
+```
+
+# print(burrow.report)
+
+# # Visualise Uniques
+# p1 <- ggplot(data=burrow.report, 
+#        aes(x=VariableName, y=Unique)) +
+#        geom_bar(colour="black", fill="#4C1E9C", 
+#                 width=.8, stat="identity") + 
+#                 guides(fill=FALSE) +
+#                 xlab("Variables") + ylab("% of Total") +
+#                 ggtitle("Unique Values") +
+#                 ylim(0, 100) +
+#               theme(panel.grid.major = element_blank(), 
+#               panel.grid.minor = element_blank(),
+#               panel.background = element_blank(), 
+#               axis.line=element_blank(),
+#               axis.text.x=element_blank(),
+#               axis.text.y=element_blank(),
+#               axis.ticks=element_blank(),
+#               legend.position="none")
+# 
+# 
+#   # Visualise Missing
+# p2 <-  ggplot(data=burrow.report, 
+#          aes(x=VariableName, y=Missing)) +
+#          geom_bar(colour="black", fill="#4C1E9C", 
+#                   width=.8, stat="identity") + 
+#                   guides(fill=FALSE) +
+#                   xlab("Variables") + ylab("% of Total") +
+#                   ggtitle("Missing Values") +
+#                   ylim(0, 100) +
+#           theme(panel.grid.major = element_blank(), 
+#                 panel.grid.minor = element_blank(),
+#                 panel.background = element_blank(), 
+#                 axis.line=element_blank(),
+#                 axis.text.x=element_blank(),
+#                 axis.text.y=element_blank(),
+#                 axis.ticks=element_blank(),
+#                 legend.position="none")
+# 
+# # plot uniques and missings
+# plot_grid(p1, p2, align='h')
+# 
+# if (sum(burrow.report$Missing)==0) {
+#   print("There were no missing values for any variable")
+# } else {
+#   print("Dealing with missing data")
+# }
+# 
+# #plotvar <- "mpg"
+# #myPlot_Int(mtcars,plotvar)
+# 
+# num.histograms <- nrow(burrow.plothist)
+# print(paste("There are",num.histograms,"numeric fields."))
+# 
+# for (i in seq_len(num.histograms)) {
+#   plotvar <- burrow.plothist[i,c("VariableName")]
+#   print(paste("Plotting",plotvar))
+# 
+#   possibleError <- tryCatch(
+#     myPlot <- myPlot_Int(burrow.inputdata,plotvar),
+#     error=function(e) e
+#   )
+# 
+#   if(inherits(possibleError, "error")) {
+#     print(paste("error plotting",plotvar))
+#     next
+#   }
+# 
+#   print(myPlot)
+# }
+

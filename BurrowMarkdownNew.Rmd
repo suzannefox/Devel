@@ -60,47 +60,52 @@ print(Data.bestguess, row.names=FALSE)
 
 ```
 
-# print(burrow.report)
+## Variable analysis - level of missing values
 
-# # Visualise Uniques
-# p1 <- ggplot(data=burrow.report, 
-#        aes(x=VariableName, y=Unique)) +
-#        geom_bar(colour="black", fill="#4C1E9C", 
-#                 width=.8, stat="identity") + 
-#                 guides(fill=FALSE) +
-#                 xlab("Variables") + ylab("% of Total") +
-#                 ggtitle("Unique Values") +
-#                 ylim(0, 100) +
-#               theme(panel.grid.major = element_blank(), 
-#               panel.grid.minor = element_blank(),
-#               panel.background = element_blank(), 
-#               axis.line=element_blank(),
-#               axis.text.x=element_blank(),
-#               axis.text.y=element_blank(),
-#               axis.ticks=element_blank(),
-#               legend.position="none")
-# 
-# 
-#   # Visualise Missing
-# p2 <-  ggplot(data=burrow.report, 
-#          aes(x=VariableName, y=Missing)) +
-#          geom_bar(colour="black", fill="#4C1E9C", 
-#                   width=.8, stat="identity") + 
-#                   guides(fill=FALSE) +
-#                   xlab("Variables") + ylab("% of Total") +
-#                   ggtitle("Missing Values") +
-#                   ylim(0, 100) +
-#           theme(panel.grid.major = element_blank(), 
-#                 panel.grid.minor = element_blank(),
-#                 panel.background = element_blank(), 
-#                 axis.line=element_blank(),
-#                 axis.text.x=element_blank(),
-#                 axis.text.y=element_blank(),
-#                 axis.ticks=element_blank(),
-#                 legend.position="none")
-# 
-# # plot uniques and missings
-# plot_grid(p1, p2, align='h')
+
+```{r missing, echo=FALSE, comment="", collapse=TRUE}
+Data.missing <- subset(Data.burrow, InfoDetail=="DENSITY_NA", select=c("Variable1","myData1"))
+Data.missing$myData1 <- as.numeric(Data.missing$myData1) * 100
+names(Data.missing) <- c("Variable","Missing")
+
+# See if there are any missing, and find max level
+Missing.total <- sum(Data.missing$Missing)
+Missing.max <- max(Data.missing$Missing)
+
+if (Missing.total==0) {
+  cat("There were no missing values for any variable")
+} else {
+  ggplot(data=Data.missing, 
+       aes(x=Variable,  y=Missing)) +
+       geom_bar(colour="black", fill="#4C1E9C",
+       width=.8, stat="identity") +
+       xlab("Variables") + ylab("% of Total Sample") +
+       ggtitle("Overview of Missing Values") +
+       theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+}
+
+```
+
+## Variable analysis - level of unique values
+
+
+```{r uniques, echo=FALSE, comment="", collapse=TRUE}
+Data.unique <- subset(Data.burrow, InfoDetail=="DENSITY_UNIQUES", select=c("Variable1","myData1"))
+Data.unique$myData1 <- as.numeric(Data.unique$myData1) * 100
+names(Data.unique) <- c("Variable","Unique")
+
+ggplot(data=Data.unique, 
+       aes(x=Variable,  y=Unique)) +
+       geom_bar(colour="black", fill="#4C1E9C",
+       width=.8, stat="identity") +
+       xlab("Variables") + ylab("% of Total Sample") +
+       ggtitle("Overview of Unique Values") +
+       theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
+
+```
+
+```{r temp, echo=FALSE, comment="", collapse=TRUE}
+
 # 
 # if (sum(burrow.report$Missing)==0) {
 #   print("There were no missing values for any variable")
@@ -131,3 +136,4 @@ print(Data.bestguess, row.names=FALSE)
 #   print(myPlot)
 # }
 
+```

@@ -1002,3 +1002,44 @@ myContentLine <- function(df.burrow,
   return(df.burrow)
 }
 
+# ======================================================================
+# draw a QQ plot of a numeric distribution to show normality
+# show outliers (outside 1.5IQR) calculated using boxplot.stats in red
+#
+# overlay with -
+#      solid green lines showing q1, median, q3 levels as for boxplots
+#      dashed blue line for mean 
+#      median line is wider than q1/q3, and opaque so that mean is
+#      not obscured if mean and median overlap
+# ======================================================================
+plot_nums <- function(data.orig, data.title) {
+  
+  names(data.orig) <- c(data.title)
+  data.plot <- as.data.frame(stack(data.orig))
+  names(data.plot) <- c("Values","Variable")
+  
+  # get stats
+  data.mean <- mean(data.plot$Values, na.rm = TRUE)
+  data.median <- median(data.plot$Values, na.rm = TRUE)
+  
+  # identify outliers
+  data.outliers <- boxplot.stats(data.plot$Values)
+  data.outlierindex <- data.plot$Values %in% data.outliers$out
+  data.plot$outliers <- "NOT"
+  data.plot$outliers[data.outlierindex] <- "IS"
+  data.colours.outliers <- c(IS="firebrick3", NOT="darkgrey")
+  data.colours.mean <- "royalblue3"
+  data.colours.median <- "olivedrab"
+  
+  plot_num <- ggplot(data.plot)
+  plot_num <- plot_num + scale_colour_manual(values = data.colours.outliers)   # outliers colours
+  plot_num <- plot_num + stat_qq(aes(sample=Values, colour = factor(outliers)))  
+  plot_num <- plot_num + geom_hline(yintercept = data.median, color=data.colours.median, size=2, alpha=0.4)
+  plot_num <- plot_num + geom_hline(yintercept = data.mean, color=data.colours.mean, linetype = "dotdash", size=1.25)
+  plot_num <- plot_num + geom_hline(yintercept = data.outliers$stats[2], color=data.colours.median)
+  plot_num <- plot_num + geom_hline(yintercept = data.outliers$stats[4], color=data.colours.median)
+  plot_num <- plot_num + theme(legend.position="none")
+  plot_num <- plot_num + ggtitle(paste("QQ plot showing normality, outliers, mean and median for",data.title))
+  
+  return(plot_num)
+}

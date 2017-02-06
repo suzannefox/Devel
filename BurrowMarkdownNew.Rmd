@@ -105,7 +105,7 @@ ggplot(data=Data.unique,
 
 ```
 
-## Variable analysis - distributions and outliers
+## Variable analysis - distributions and outliers for numeric variables
 
 ```{r temp, echo=FALSE, comment="", collapse=TRUE}
 

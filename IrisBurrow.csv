@@ -1,5 +1,5 @@
 "","InfoLevel","InfoType","InfoDetail","VarLevel","Variable1","myData1","Variable2","myData2","myNotes"
-"1","HEADER","RUN DATE","Sun Feb 05 2017, 17:06:42","UNIVARIATE","","","","",""
+"1","HEADER","RUN DATE","Mon Feb 06 2017, 19:58:16","UNIVARIATE","","","","",""
 "2","DATASET","SOURCEDATA","iris","UNIVARIATE","","","","",""
 "3","DATASET","SOURCE","iris dataset","UNIVARIATE","","","","",""
 "4","DATASET","FEATURE","COUNT_COLUMNS","UNIVARIATE","NUMCOLS","5","","","ncol(myData)"

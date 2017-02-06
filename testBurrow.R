@@ -1,13 +1,13 @@
 
-source("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/Burrow.R")
+workdir <- "C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/"
 
-testdata <- read.csv("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/TestData.csv")
+source("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/Burrow.R")
+testdata <- read.csv(paste(workdir,"TestData.csv",sep=""))
+
 #testdata <- iris
 
-x <- Burrow(testdata, "test data csv", TRUE)
-Burrow <- x$longBurrow
+Burrow.test <- Burrow(iris, "iris dataset", TRUE)
+Burrow.test.data <- Burrow.test$data
 
-bg <- subset(Burrow, InfoType=="BEST GUESS")
-cr <- subset(Burrow, InfoType=="ANALYSIS")
+write.csv(Burrow.test.data,paste(workdir,"IrisBurrow.csv",sep=""))
 
-cr

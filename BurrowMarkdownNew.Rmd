@@ -17,6 +17,7 @@ workdir <- "C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/"
 setwd(workdir)
 
 Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
+#Data.source <- iris
 Data.burrow <- read.csv("TestBurrow.csv", stringsAsFactors = FALSE)
 
 ```
@@ -63,7 +64,7 @@ print(Data.bestguess, row.names=FALSE)
 ## Variable analysis - level of missing values
 
 
-```{r missing, echo=FALSE, comment="", collapse=TRUE}
+```{r missing, echo=FALSE, comment="", fig.width=9, fig.height=6, collapse=TRUE}
 Data.missing <- subset(Data.burrow, InfoDetail=="DENSITY_NA", select=c("Variable1","myData1"))
 Data.missing$myData1 <- as.numeric(Data.missing$myData1) * 100
 names(Data.missing) <- c("Variable","Missing")
@@ -89,7 +90,7 @@ if (Missing.total==0) {
 ## Variable analysis - level of unique values
 
 
-```{r uniques, echo=FALSE, comment="", collapse=TRUE}
+```{r uniques, echo=FALSE, comment="", collapse=TRUE, fig.width=9, fig.height=6}
 Data.unique <- subset(Data.burrow, InfoDetail=="DENSITY_UNIQUES", select=c("Variable1","myData1"))
 Data.unique$myData1 <- as.numeric(Data.unique$myData1) * 100
 names(Data.unique) <- c("Variable","Unique")
@@ -103,6 +104,8 @@ ggplot(data=Data.unique,
        theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
 
 ```
+
+## Variable analysis - distributions and outliers
 
 ```{r temp, echo=FALSE, comment="", collapse=TRUE}
 

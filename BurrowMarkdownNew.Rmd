@@ -11,6 +11,7 @@ df_print: kable
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 library(GGally)
+library(corrplot)
 
 ```
 
@@ -38,6 +39,11 @@ Data.vars.number <- subset(Data.burrow,
                            InfoType=="BEST GUESS" 
                            & (myData1=="NUMBER" | myData1=="DECIMALS"))
 
+
+# Get all the variables which are number fields
+Data.vars.categorical <- subset(Data.burrow, 
+                           InfoType=="BEST GUESS" 
+                           & (myData1=="CATEGORICAL"))
 
 ```
 
@@ -125,14 +131,18 @@ ggplot(data=Data.unique,
 
 ## Variable analysis - correlations
 
-```{r correlations, echo=FALSE, message=FALSE, warning=FALSE, comment="", collapse=TRUE}
+```{r correlations, echo=FALSE, message=FALSE, warning=FALSE, comment="", , fig.width=9, fig.height=6, collapse=TRUE}
 
 if (nrow(Data.vars.number)==0) {
   print("No numeric variables in this dataset")
 
 } else {
   Data.pairs <- as.list(Data.vars.number[c("Variable1")])
-  Data.scatter <- Data.source[,c(Data.pairs$Variable1)]
+  Data.scatter <- as.data.frame(Data.source[,c(Data.pairs$Variable1)])
+
+  Data.cors <- cor(Data.scatter, use="complete.obs")
+  print("Correlations for numeric Variables")
+  corrplot.mixed(Data.cors)
 
   ptot <- ncol(Data.scatter)
 

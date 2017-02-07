@@ -32,6 +32,7 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   # =============================================================
   # INITIALISE BLANK DATAFRAME FOR "LONG" FORMAT DATA
   # =============================================================
+  # =============================================================
   df.burrow <- data.frame(InfoLevel=character(),
                           InfoType=character(),
                           InfoDetail=character(),
@@ -81,7 +82,7 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   df.burrow <- write_Datasetinfo(myData, sourcedescription, df.burrow, diagnostics) 
   
   # =================================================================
-  # CALCULATE CORRELATIONS FRO NUMERIC FIELDS
+  # CALCULATE CORRELATIONS FOR NUMERIC FIELDS
   # =================================================================
   if (diagnostics==TRUE) {
     print(paste("BURROW","... Calculating correlations"))
@@ -917,26 +918,44 @@ calculate_Correlations <- function(myData, diagnostics=FALSE) {
 
   # identify all the variables suitable for numeric stats
   myData.mean <- as.data.frame(suppressWarnings(sapply(myData, mean, na.rm=TRUE)))
-  colnames(myData.mean) <- "Value"
+  names(myData.mean) <- c("MeanVal")
+  # non numeric variables give NA for means so remove them
+  myData.mean <- subset(myData.mean, !is.na(MeanVal))
   
-  # get the numerical variables
-  myData.numericols <- row.names(subset(myData.mean, Value!="NA"))
+  if (diagnostics==TRUE) {
+    print(paste("... calculate_Correlations ... number of variables",nrow(myData.mean)))
+  }
   
   # make empty dataframe
   myData.correlations <- data.frame(Var1=character(),
                                     Var2=character(),
                                     cor=double())
-  # calculate correlations
-  myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)], use="complete.obs"))
   
-  for (i in names(myData.cor)) {
-    temp.Var1 <- myData.numericols
-    temp.Var2 <- rep_len(i, length(temp.Var1))
-    temp.Var3 <- myData.cor[,c(i)]
-    temp.df = data.frame("Var1" = temp.Var1, "Var2" = temp.Var2, "Value" = temp.Var3)
-    myData.correlations <- rbind2(myData.correlations, temp.df)
+  # we need at least 2 variables to get correlations
+  if (nrow(myData.mean) > 1) {
+    colnames(myData.mean) <- "Value"
+    
+    # get the numerical variables
+    myData.numericols <- row.names(subset(myData.mean))
+    if (diagnostics==TRUE) {
+      print(paste("... calculate_Correlations ... numeric cols are",myData.numericols))
+    }
+    
+    # calculate correlations
+    myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)], use="complete.obs"))
+    
+    for (i in names(myData.cor)) {
+      temp.Var1 <- myData.numericols
+      temp.Var2 <- rep_len(i, length(temp.Var1))
+      temp.Var3 <- myData.cor[,c(i)]
+      temp.df = data.frame("Var1" = temp.Var1, "Var2" = temp.Var2, "Value" = temp.Var3)
+      myData.correlations <- rbind2(myData.correlations, temp.df)
+    }
   }
   
+  if (diagnostics==TRUE) {
+    print(paste("... calculate_Correlations ... Finished"))
+  }
   return(myData.correlations)
 }  
 

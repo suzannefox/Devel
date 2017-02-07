@@ -10,20 +10,38 @@ df_print: kable
 
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
-#library(cowplot)
+library(GGally)
+
+```
+
+## Run the Burrow function to analyse the source data
+
+```{r Burrow, echo=FALSE,  message=FALSE, warning=FALSE}
 
 workdir <- "C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/"
-
 setwd(workdir)
 
-Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
+# make a dataframe of the test data
 #Data.source <- iris
-Data.burrow <- read.csv("TestBurrow.csv", stringsAsFactors = FALSE)
+#Data.title <- "Iris dataset"
+
+Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
+Data.title <- "synthetic test dataset"
+
+# make a dataframe of the output from the burrow function for this data
+source("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/Burrow.R")
+Burrow.test <- Burrow(Data.source, Data.title, TRUE)
+Data.burrow <- Burrow.test$data
+
+# Get all the variables which are number fields
+Data.vars.number <- subset(Data.burrow, 
+                           InfoType=="BEST GUESS" 
+                           & (myData1=="NUMBER" | myData1=="DECIMALS"))
+
 
 ```
 
 ## Dataset details
-
 
 ```{r structure, echo=FALSE, comment="", collapse=TRUE}
 # Dataset name
@@ -105,38 +123,55 @@ ggplot(data=Data.unique,
 
 ```
 
+## Variable analysis - correlations
+
+```{r correlations, echo=FALSE, message=FALSE, warning=FALSE, comment="", collapse=TRUE}
+
+if (nrow(Data.vars.number)==0) {
+  print("No numeric variables in this dataset")
+
+} else {
+  Data.pairs <- as.list(Data.vars.number[c("Variable1")])
+  Data.scatter <- Data.source[,c(Data.pairs$Variable1)]
+
+  ptot <- ncol(Data.scatter)
+
+  p1 <- 1
+  p2 <- 4
+  if (ptot < 4 ) {p2==ptot}
+
+  while(ptot > 0) {
+    Data.plot <- Data.scatter[,c(p1:p2)]
+    print(ggpairs(Data.plot))
+
+    ptot <- ptot-4
+    if (ptot > 0 ) {
+      p1 <- p1+4
+      p2 <- p2+4
+      if (ptot < 4 ) {p2==ptot}
+    }
+  }
+}
+```
+
 ## Variable analysis - distributions and outliers for numeric variables
 
-```{r temp, echo=FALSE, comment="", collapse=TRUE}
+```{r outliers, echo=FALSE, comment="", collapse=TRUE, fig.width=9, fig.height=6}
 
-# 
-# if (sum(burrow.report$Missing)==0) {
-#   print("There were no missing values for any variable")
-# } else {
-#   print("Dealing with missing data")
-# }
-# 
-# #plotvar <- "mpg"
-# #myPlot_Int(mtcars,plotvar)
-# 
-# num.histograms <- nrow(burrow.plothist)
-# print(paste("There are",num.histograms,"numeric fields."))
-# 
-# for (i in seq_len(num.histograms)) {
-#   plotvar <- burrow.plothist[i,c("VariableName")]
-#   print(paste("Plotting",plotvar))
-# 
-#   possibleError <- tryCatch(
-#     myPlot <- myPlot_Int(burrow.inputdata,plotvar),
-#     error=function(e) e
-#   )
-# 
-#   if(inherits(possibleError, "error")) {
-#     print(paste("error plotting",plotvar))
-#     next
-#   }
-# 
-#   print(myPlot)
-# }
+if (nrow(Data.vars.number)==0) {
+   print("No numeric variables in this dataset")
+  
+ } else {
+  for (i in 1:nrow(Data.vars.number)) {
+    # Generate data
+    data.title <- Data.vars.number[i,c("Variable1")]
+    outtext <- paste("Charting -",data.title," datatype is ",Data.vars.number[i,c("myData1")])
+    print(outtext)
+    
+    data.orig <- as.data.frame(Data.source[,c(data.title)])
+    xx <- plot_nums(data.orig, data.title)
+    plot(xx)
+  }
+}
 
 ```

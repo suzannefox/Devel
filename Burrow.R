@@ -131,7 +131,7 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
                 sourcedescription = sourcedescription, 
                 data = df.burrow,
                 runStatsProcTime = tused[1])
-  
+
   attr(value, "class") <- "Burrow"
   value
 }

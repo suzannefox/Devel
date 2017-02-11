@@ -23,6 +23,13 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   }
   
   # =================================================================
+  # MAKE SURE THERE ARE NO FACTOR VARIABLES
+  # =================================================================
+  sourcedataname <- deparse(substitute(sourcedata))
+  cleandata <- data.frame(lapply(sourcedata, function(x) if(is.factor(x)) as.character(x) else x), stringsAsFactors = FALSE)
+  sourcedata <- cleandata
+  
+  # =================================================================
   # REPORT THE RUN START
   # =================================================================
   if (diagnostics==TRUE) {
@@ -63,13 +70,13 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
 
   myArgs.InfoLevel <- "DATASET"
   myArgs.InfoType <- "SOURCEDATA"
-  myArgs.InfoDetail <- deparse(substitute(sourcedata))
+  myArgs.InfoDetail <- sourcedataname
 
   df.burrow = myContentLine(df.burrow,
-                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                            myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail,
                             myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
                             myArgs.Notes)
-  
+
   # =================================================================
   # COLLECT DATASET DETAILS
   # =================================================================
@@ -942,14 +949,16 @@ calculate_Correlations <- function(myData, diagnostics=FALSE) {
     }
     
     # calculate correlations
-    myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)], use="complete.obs"))
+    try(myData.cor <- as.data.frame(cor(myData[,c(myData.numericols)], use="complete.obs")))
     
-    for (i in names(myData.cor)) {
-      temp.Var1 <- myData.numericols
-      temp.Var2 <- rep_len(i, length(temp.Var1))
-      temp.Var3 <- myData.cor[,c(i)]
-      temp.df = data.frame("Var1" = temp.Var1, "Var2" = temp.Var2, "Value" = temp.Var3)
-      myData.correlations <- rbind2(myData.correlations, temp.df)
+    if (exists("myData.cor")) {
+      for (i in names(myData.cor)) {
+        temp.Var1 <- myData.numericols
+        temp.Var2 <- rep_len(i, length(temp.Var1))
+        temp.Var3 <- myData.cor[,c(i)]
+        temp.df = data.frame("Var1" = temp.Var1, "Var2" = temp.Var2, "Value" = temp.Var3)
+        myData.correlations <- rbind2(myData.correlations, temp.df)
+      }
     }
   }
   
@@ -1012,6 +1021,7 @@ myContentLine <- function(df.burrow,
   if (Variable2 != "") VarLevel <- "BIVARIATE"
   if (InfoLevel == "FILE") VarLevel <- ""
   
+  # remove very small numbers
   newrow <- data.frame("InfoLevel"=InfoLevel, "InfoType"=InfoType, "InfoDetail"=InfoDetail, 
                        "VarLevel"=VarLevel, 
                        "Variable1"=Variable1, "myData1"=myData1, "Variable2"=Variable2, "myData2"=myData2, 

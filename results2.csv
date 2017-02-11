@@ -1,0 +1,120 @@
+"","InfoType","Variable1","myData1","InfoDetail","source","recsize","proctime"
+"70","BEST GUESS","agegp","MAINLY NUMERIC 7% UNIQUE","REGEX DIGITS 95% MATCH BUT MAY NOT BE NUMBER FIELD","Smoking, Alcohol and (O)esophageal Cancer",88,0.449999999999818
+"115","BEST GUESS","alcgp","MAINLY NUMERIC 5% UNIQUE","REGEX DIGITS 95% MATCH BUT MAY NOT BE NUMBER FIELD","Smoking, Alcohol and (O)esophageal Cancer",88,0.449999999999818
+"160","BEST GUESS","tobgp","MAINLY NUMERIC 5% UNIQUE","REGEX DIGITS 95% MATCH BUT MAY NOT BE NUMBER FIELD","Smoking, Alcohol and (O)esophageal Cancer",88,0.449999999999818
+"205","BEST GUESS","ncases","NUMBER","REGEX MATCH","Smoking, Alcohol and (O)esophageal Cancer",88,0.449999999999818
+"252","BEST GUESS","ncontrols","NUMBER","REGEX MATCH","Smoking, Alcohol and (O)esophageal Cancer",88,0.449999999999818
+"62","BEST GUESS","breaks","NUMBER","REGEX MATCH","The Number of Breaks in Yarn during Weaving",54,0.230000000000473
+"107","BEST GUESS","wool","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","The Number of Breaks in Yarn during Weaving",54,0.230000000000473
+"152","BEST GUESS","tension","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","The Number of Breaks in Yarn during Weaving",54,0.230000000000473
+"74","BEST GUESS","Fertility","DECIMALS","MULTIPLE CONDITIONS REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"125","BEST GUESS","Agriculture","DECIMALS","MULTIPLE CONDITIONS REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"176","BEST GUESS","Examination","NUMBER","REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"227","BEST GUESS","Education","NUMBER","REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"278","BEST GUESS","Catholic","DECIMALS","REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"329","BEST GUESS","Infant.Mortality","DECIMALS","MULTIPLE CONDITIONS REGEX MATCH","Swiss Fertility and Socioeconomic Indicators (1888)",47,0.519999999999527
+"701","BEST GUESS","lat","DECIMALS","REGEX MATCH","Quakes off Fiji",1000,0.449999999999818
+"120","BEST GUESS","long","DECIMALS","REGEX MATCH","Quakes off Fiji",1000,0.449999999999818
+"170","BEST GUESS","depth","NUMBER","REGEX MATCH","Quakes off Fiji",1000,0.449999999999818
+"220","BEST GUESS","mag","DECIMALS","MULTIPLE CONDITIONS REGEX MATCH","Quakes off Fiji",1000,0.449999999999818
+"270","BEST GUESS","stations","NUMBER","REGEX MATCH","Quakes off Fiji",1000,0.449999999999818
+"178","BEST GUESS","ï..Accident_Index","TIMES10","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"223","BEST GUESS","Location_Easting_OSGR","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"295","BEST GUESS","Location_Northing_OSGR","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"367","BEST GUESS","Longitude","SCIENTIFIC","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"439","BEST GUESS","Latitude","DECIMALS","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"511","BEST GUESS","Police_Force","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"583","BEST GUESS","Accident_Severity","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"655","BEST GUESS","Number_of_Vehicles","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"727","BEST GUESS","Number_of_Casualties","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"799","BEST GUESS","Date","MAINLY NUMERIC 0% UNIQUE","REGEX DIGITS 95% MATCH BUT MAY NOT BE NUMBER FIELD","STATS19 Accident data",1640597,337.339999999999
+"844","BEST GUESS","Day_of_Week","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"916","BEST GUESS","Time","BIT_TRUEFALSE","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"961","BEST GUESS","Local_Authority_.District.","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1033","BEST GUESS","Local_Authority_.Highway.","TEXT 0% UNIQUE","REGEX ALPHAS 90% MATCH","STATS19 Accident data",1640597,337.339999999999
+"1078","BEST GUESS","X1st_Road_Class","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1150","BEST GUESS","X1st_Road_Number","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1222","BEST GUESS","Road_Type","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1294","BEST GUESS","Speed_limit","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1366","BEST GUESS","Junction_Detail","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1438","BEST GUESS","Junction_Control","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1510","BEST GUESS","X2nd_Road_Class","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1582","BEST GUESS","X2nd_Road_Number","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1654","BEST GUESS","Pedestrian_Crossing.Human_Control","BIT_ONEZERO","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1726","BEST GUESS","Pedestrian_Crossing.Physical_Facilities","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1798","BEST GUESS","Light_Conditions","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1870","BEST GUESS","Weather_Conditions","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"1942","BEST GUESS","Road_Surface_Conditions","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"2014","BEST GUESS","Special_Conditions_at_Site","BIT_ONEZERO","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"2086","BEST GUESS","Carriageway_Hazards","BIT_ONEZERO","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"2158","BEST GUESS","Urban_or_Rural_Area","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"2230","BEST GUESS","Did_Police_Officer_Attend_Scene_of_Accident","NUMBER","REGEX MATCH","STATS19 Accident data",1640597,337.339999999999
+"2302","BEST GUESS","LSOA_of_Accident_Location","TEXT 2% UNIQUE","REGEX ALPHAS 90% MATCH","STATS19 Accident data",1640597,337.339999999999
+"54","BEST GUESS","school.sex.age.address.famsize.Pstatus.Medu.Fedu.Mjob.Fjob.reason.guardian.traveltime.studytime.failures.schoolsup.famsup.paid.activities.nursery.higher.internet.romantic.famrel.freetime.goout.Dalc.Walc.health.absences.G1.G2.G3","TEXT 100% UNIQUE","REGEX ALPHAS 90% MATCH","UCI Student performance dataset - Portuguese",649,0.0900000000001455
+"541","BEST GUESS","school.sex.age.address.famsize.Pstatus.Medu.Fedu.Mjob.Fjob.reason.guardian.traveltime.studytime.failures.schoolsup.famsup.paid.activities.nursery.higher.internet.romantic.famrel.freetime.goout.Dalc.Walc.health.absences.G1.G2.G3","TEXT 100% UNIQUE","REGEX ALPHAS 90% MATCH","UCI Student performance dataset - Maths",395,0.0500000000001819
+"182","BEST GUESS","school","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"2271","BEST GUESS","sex","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"272","BEST GUESS","age","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"333","BEST GUESS","address","BIT_TRUEFALSE","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"378","BEST GUESS","famsize","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"423","BEST GUESS","Pstatus","BIT_TRUEFALSE","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"468","BEST GUESS","Medu","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"529","BEST GUESS","Fedu","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"590","BEST GUESS","Mjob","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"635","BEST GUESS","Fjob","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"680","BEST GUESS","reason","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"725","BEST GUESS","guardian","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"770","BEST GUESS","traveltime","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"831","BEST GUESS","studytime","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"892","BEST GUESS","failures","BIT_ONEZERO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"953","BEST GUESS","schoolsup","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"998","BEST GUESS","famsup","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1043","BEST GUESS","paid","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1088","BEST GUESS","activities","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1133","BEST GUESS","nursery","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1178","BEST GUESS","higher","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1223","BEST GUESS","internet","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1268","BEST GUESS","romantic","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1313","BEST GUESS","famrel","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1374","BEST GUESS","freetime","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1435","BEST GUESS","goout","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1496","BEST GUESS","Dalc","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1557","BEST GUESS","Walc","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1618","BEST GUESS","health","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1679","BEST GUESS","absences","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1740","BEST GUESS","G1","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1801","BEST GUESS","G2","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1862","BEST GUESS","G3","NUMBER","REGEX MATCH","UCI Student performance dataset - Portuguese",649,2.84000000000015
+"1821","BEST GUESS","school","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"2272","BEST GUESS","sex","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"2721","BEST GUESS","age","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"3331","BEST GUESS","address","BIT_TRUEFALSE","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"3781","BEST GUESS","famsize","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"4231","BEST GUESS","Pstatus","BIT_TRUEFALSE","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"4681","BEST GUESS","Medu","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"5291","BEST GUESS","Fedu","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"5901","BEST GUESS","Mjob","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"6351","BEST GUESS","Fjob","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"6801","BEST GUESS","reason","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"7251","BEST GUESS","guardian","CATEGORICAL","REGEX ALPHAS 95% MATCH AND < 11 UNIQUES","UCI Student performance dataset - Maths",395,2.5600000000004
+"7701","BEST GUESS","traveltime","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"8311","BEST GUESS","studytime","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"8921","BEST GUESS","failures","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"9531","BEST GUESS","schoolsup","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"9981","BEST GUESS","famsup","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"10431","BEST GUESS","paid","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"10881","BEST GUESS","activities","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"11331","BEST GUESS","nursery","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"11781","BEST GUESS","higher","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"12231","BEST GUESS","internet","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"12681","BEST GUESS","romantic","BIT_YESNO","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"13131","BEST GUESS","famrel","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"13741","BEST GUESS","freetime","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"14351","BEST GUESS","goout","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"14961","BEST GUESS","Dalc","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"15571","BEST GUESS","Walc","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"16181","BEST GUESS","health","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"16791","BEST GUESS","absences","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"17401","BEST GUESS","G1","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"18011","BEST GUESS","G2","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004
+"18621","BEST GUESS","G3","NUMBER","REGEX MATCH","UCI Student performance dataset - Maths",395,2.5600000000004

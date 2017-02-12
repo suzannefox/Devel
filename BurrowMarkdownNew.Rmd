@@ -23,11 +23,11 @@ workdir <- "C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/"
 setwd(workdir)
 
 # make a dataframe of the test data
-#Data.source <- iris
-#Data.title <- "Iris dataset"
+Data.source <- iris
+Data.title <- "Iris dataset"
 
-Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
-Data.title <- "synthetic test dataset"
+#Data.source <- read.csv("TestData.csv", stringsAsFactors = FALSE)
+#Data.title <- "synthetic test dataset"
 
 # make a dataframe of the output from the burrow function for this data
 source("C:/Users/Suzanne/OneDrive - Suzanne Fox/Dissertation/R/Burrow.R")

@@ -31,14 +31,13 @@ source <- list(
                swiss,"Swiss Fertility and Socioeconomic Indicators (1888)",
                quakes,"Quakes off Fiji")
 
-startat <- 15
+startat <- 1
 for (i in seq(startat, length(source), 2)) {
   
   Data.source <- as.data.frame(source[[i]])
   Data.title <- source[[i + 1]]
   
   # get the data
-  print(paste("Analysing",Data.title))
   Data.temp <- Burrow(Data.source, Data.title, FALSE)
   Data.burrow <- Data.temp$data
   Data.time <- Data.temp$runStatsProcTime
@@ -46,59 +45,60 @@ for (i in seq(startat, length(source), 2)) {
   Data.guess$source <- Data.title
   Data.guess$recsize <- nrow(Data.source)
   Data.guess$proctime <- Data.time
-  
-  #results <- rbind(results,Data.guess)
-  
+
+  x <- sprintf("%s, %f",Data.title, Data.time)  
+  print(x)
 }
 
-# =====================================================================
-# get some examples from SQL northwind
-library(RODBC)
-sqldb <- odbcDriverConnect('driver={SQL Server};server=P37\\SQLEXPRESS;database=Northwind;trusted_connection=true;rows_at_time=1')
-
-Data.source <- sqlQuery(sqldb, 'select * from information_schema.tables')
-Data.title <- "SQL Northwind information_schema"
-
-# get the burrow data
-Data.temp <- Burrow(Data.source, Data.title, FALSE)
-Data.burrow <- Data.temp$data
-Data.time <- Data.temp$runStatsProcTime
-Data.guess <- subset(Data.burrow, InfoType=="BEST GUESS",select=c("InfoType","Variable1","myData1","InfoDetail"))
-Data.guess$source <- Data.title
-Data.guess$recsize <- nrow(Data.source)
-Data.guess$proctime <- Data.time
-
-results <- rbind(results,Data.guess)
-
-sqltxt <- "select OrderID,
-CustomerID,
-EmployeeID,
-OrderDate,
-RequiredDate,
-COALESCE(ShippedDate,'') as ShippedDate,
-ShipVia,
-Freight,
-ShipName,
-ShipAddress,
-ShipCity,
-COALESCE(ShipRegion,'') as ShipRegion,
-COALESCE(ShipPostalCode,'') as ShipPostalCode,
-ShipCountry
-from orders"
-
-Data.source <- sqlQuery(sqldb, sqltxt)
-Data.title <- "SQL Northwind Orders table"
-
-# get the burrow data
-Data.temp <- Burrow(Data.source, Data.title, TRUE)
-Data.burrow <- Data.temp$data
-Data.time <- Data.temp$runStatsProcTime
-Data.guess <- subset(Data.burrow, InfoType=="BEST GUESS",select=c("InfoType","Variable1","myData1","InfoDetail"))
-Data.guess$source <- Data.title
-Data.guess$recsize <- nrow(Data.source)
-Data.guess$proctime <- Data.time
-
-results <- rbind(results,Data.guess)
+# # =====================================================================
+# # get some examples from SQL northwind
+# library(RODBC)
+# sqldb <- odbcDriverConnect('driver={SQL Server};server=P37\\SQLEXPRESS;database=Northwind;trusted_connection=true;rows_at_time=1')
+# 
+# Data.source <- sqlQuery(sqldb, 'select * from information_schema.tables')
+# Data.title <- "SQL Northwind information_schema"
+# 
+# # get the burrow data
+# Data.temp <- Burrow(Data.source, Data.title, FALSE)
+# Data.burrow <- Data.temp$data
+# Data.time <- Data.temp$runStatsProcTime
+# Data.guess <- subset(Data.burrow, InfoType=="BEST GUESS",select=c("InfoType","Variable1","myData1","InfoDetail"))
+# Data.guess$source <- Data.title
+# Data.guess$recsize <- nrow(Data.source)
+# Data.guess$proctime <- Data.time
+# 
+# results <- rbind(results,Data.guess)
+# 
+# sqltxt <- "select OrderID,
+# CustomerID,
+# EmployeeID,
+# OrderDate,
+# RequiredDate,
+# COALESCE(ShippedDate,'') as ShippedDate,
+# ShipVia,
+# Freight,
+# ShipName,
+# ShipAddress,
+# ShipCity,
+# COALESCE(ShipRegion,'') as ShipRegion,
+# COALESCE(ShipPostalCode,'') as ShipPostalCode,
+# ShipCountry
+# from orders"
+# 
+# Data.source <- sqlQuery(sqldb, sqltxt)
+# Data.title <- "SQL Northwind Orders table"
+# 
+# # get the burrow data
+# Data.temp <- Burrow(Data.source, Data.title, TRUE)
+# Data.burrow <- Data.temp$data
+# Data.time <- Data.temp$runStatsProcTime
+# Data.guess <- subset(Data.burrow, InfoType=="BEST GUESS",select=c("InfoType","Variable1","myData1","InfoDetail"))
+# Data.guess$source <- Data.title
+# Data.guess$recsize <- nrow(Data.source)
+# Data.guess$proctime <- Data.time
+# 
+# Data.guess
+# #results <- rbind(results,Data.guess)
 
 # =====================================================================
 # results for some csv files
@@ -119,6 +119,7 @@ for (i in seq(startat, length(csv), 2)) {
   Data.title <- csv[[i + 1]]
   
   # get the data
+  print(paste("Analysing",Data.title))
   Data.temp <- Burrow(Data.source, Data.title, FALSE)
   Data.burrow <- Data.temp$data
   Data.time <- Data.temp$runStatsProcTime
@@ -127,6 +128,7 @@ for (i in seq(startat, length(csv), 2)) {
   Data.guess$recsize <- nrow(Data.source)
   Data.guess$proctime <- Data.time
   
-  results <- rbind(results,Data.guess)
+  x <- sprintf("%s, %f",Data.title, Data.time)  
+  print(x)
   
 }

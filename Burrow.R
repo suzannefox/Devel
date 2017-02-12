@@ -1022,6 +1022,9 @@ myContentLine <- function(df.burrow,
   if (InfoLevel == "FILE") VarLevel <- ""
   
   # remove very small numbers
+  if (grepl("e-",myData1)) myData1 <- 0
+  if (grepl("e-",myData2)) myData2 <- 0
+  
   newrow <- data.frame("InfoLevel"=InfoLevel, "InfoType"=InfoType, "InfoDetail"=InfoDetail, 
                        "VarLevel"=VarLevel, 
                        "Variable1"=Variable1, "myData1"=myData1, "Variable2"=Variable2, "myData2"=myData2, 

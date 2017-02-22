@@ -37,7 +37,7 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
   }
   
   # =============================================================
-  # INITIALISE BLANK DATAFRAME FOR "LONG" FORMAT DATA
+  # INITIALISE BLANK DATAFRAME FOR "TIDY" FORMAT DATA
   # =============================================================
   # =============================================================
   df.burrow <- data.frame(InfoLevel=character(),
@@ -124,6 +124,13 @@ Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
     }
   }
   
+  # =================================================================
+  # THIS SECTION IS FOR STATISTICAL TESTS DEPENDANT ON DATA TYPE
+  # ADD A NEW FUNCTION PER TEST USING report_Normality AS A 
+  # TEMPLATE FUNCTION
+  # =================================================================
+  df.burrow <- report_Normality(myData, df.burrow, diagnostics)
+
   # =================================================================
   # ASSEMBLE THE LIST OF OBJECTS TO RETURN TO THE CALLER
   # =================================================================
@@ -987,7 +994,7 @@ write_Calculations <- function(df.correlations, Field, df.burrow, calcType) {
       myArgs.Data1 <- my.corr[i,"Value"]
       myArgs.Variable2 <- my.corr[i,"Var2"]
       myArgs.Data2 <- ""
-      myArgs.Notes <- "NAs excluded, Pearsons calculation"
+      myArgs.Notes <- "NAs excluded, Pearsons calculation, see https://statistics.laerd.com/statistical-guides/pearson-correlation-coefficient-statistical-guide.php"
       
       df.burrow = myContentLine(df.burrow, myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
                                 myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
@@ -996,6 +1003,45 @@ write_Calculations <- function(df.correlations, Field, df.burrow, calcType) {
   }
   
   return (df.burrow)
+}
+
+# -------------------------------------------------------------
+# Normality tests for numeric distributions
+# -------------------------------------------------------------
+report_Normality <- function(myData, df.burrow, diagnostics=FALSE) {
+
+  # get the set of variables which qualify for the test
+  vars.normtest <- subset(df.burrow, InfoType=="BEST GUESS" & (myData1=="DECIMALS" | myData1=="NUMBER"),
+                          select=c("Variable1"))
+  
+  # for each variable, collect and report the shapiro statistic
+  for (i in seq(1, nrow(vars.normtest))) {
+    Var.to.test <- vars.normtest$Variable1[i]
+    if (diagnostics==TRUE) {
+      print(paste("Testing variable :",Var.to.test))
+    }
+    
+    Var.norm <- shapiro.test(myData[,c(Var.to.test)])
+    # format results
+    Var.result <- sprintf("W=%.5f, p-value=%.5f", Var.norm$statistic, Var.norm$p.value)
+    
+    # add to the burrow data
+    myArgs.InfoLevel <- "FIELD"
+    myArgs.InfoType <- "STATISTIC"
+    myArgs.InfoDetail <- "SHAPIRO"
+    myArgs.Variable1 <- Var.to.test
+    myArgs.Data1 <- Var.result
+    myArgs.Variable2 <- ""
+    myArgs.Data2 <- ""
+    myArgs.Notes <- "See - https://www.r-bloggers.com/normality-tests-don%E2%80%99t-do-what-you-think-they-do/"
+
+    df.burrow = myContentLine(df.burrow, myArgs.InfoLevel, myArgs.InfoType, myArgs.InfoDetail, 
+                              myArgs.Variable1, myArgs.Data1, myArgs.Variable2, myArgs.Data2,
+                              myArgs.Notes)
+    
+  }
+  # return the burrow data with the new additions
+  return(df.burrow)
 }
 
 # -------------------------------------------------------------

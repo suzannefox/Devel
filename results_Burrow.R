@@ -111,7 +111,7 @@ csv <- list(
             "student-por.csv","UCI Student performance dataset - Portuguese",
             "student-mat.csv","UCI Student performance dataset - Maths")
 
-startat <- 1
+startat <- 5
 for (i in seq(startat, length(csv), 2)) {
   
   Data.file <- paste(datadir,csv[[i]],sep="")
@@ -119,7 +119,6 @@ for (i in seq(startat, length(csv), 2)) {
   Data.title <- csv[[i + 1]]
   
   # get the data
-  print(paste("Analysing",Data.title))
   Data.temp <- Burrow(Data.source, Data.title, FALSE)
   Data.burrow <- Data.temp$data
   Data.time <- Data.temp$runStatsProcTime

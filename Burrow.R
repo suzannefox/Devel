@@ -1,7 +1,34 @@
 
-# ==============================================
-# create an S3 class
-# ==============================================
+# ===================================================================
+# February 2017 : create an R S3 class called Burrow
+#
+# Author : Suzanne Fox, Suzanne.Fox@city.ac.uk
+#
+# INPUTS : sourcedata (type dataframe) - a dataframe of the source data to be analysed
+#          assumption is that this dataframe has rows representing records
+#          and columns representing variables
+#
+#          sourcedescription (type string) - a user-specified string describing the 
+#          input 
+#
+#          dataframe (type boolean) - a TRUE/FALSE flag indicating whether 
+#          verbose diagnostic mmessages are to be output at runtime
+#          
+# OUTPUTS :  An R list containing the sourcedata and sourcedescription as 
+#            supplied
+#            data (type dataframe) - the tidy format Burrow data
+#            runStatsProcTime - processing time
+#            NOTE : sourcedata and sourcedescription are returned so the object is 
+#            complete within itself, and reproduceable if exported
+#
+# EXAMPLE : test <- Burrow(iris,"iris dataset", FALSE)
+#
+# PURPOSE : The purpose of this function is to extract metadata about the sourcedata
+#           submitted, comprising data about the dataset, data about the variables
+#           a "best guess" at variable data type, and various univariate summary 
+#           statistics and bivariate statistics for variables appropriate to data type
+# ===================================================================
+
 Burrow <- function(sourcedata, sourcedescription, diagnostics=FALSE) {
 
   # =================================================================
@@ -1080,6 +1107,11 @@ myContentLine <- function(df.burrow,
   return(df.burrow)
 }
 
+# ===================================================================
+# February 2017 : create functions to plot data
+#
+# Author : Suzanne Fox, Suzanne.Fox@city.ac.uk
+#
 # ======================================================================
 # draw a QQ plot of a numeric distribution to show normality
 # show outliers (outside 1.5IQR) calculated using boxplot.stats in red
